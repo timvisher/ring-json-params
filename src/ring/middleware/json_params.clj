@@ -10,8 +10,9 @@
   (fn [req]
     (if-let [body (and (json-request? req) (:body req))]
       (let [bstr (slurp body)
-            json-params (json/parse-string bstr)
-            req* (assoc req
+            req* (assoc req :body bstr)
+            json-params (try (json/parse-string bstr) (catch Exception e))
+            req* (assoc req*
                    :json-params json-params
                    :params (merge (:params req) json-params))]
         (handler req*))
