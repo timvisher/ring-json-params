@@ -33,3 +33,10 @@
         resp (json-echo req)]
     (is (= {"id" 3 "foo" "bar"} (:params resp)))
     (is (= {"foo" "bar"} (:json-params resp)))))
+
+(deftest swallows-parse-errors-and-augments-with-string-body-and-stacktrace
+  (let [request {:content-type "application/json; charset=UTF-8"
+                 :body (stream "test")}
+        response (json-echo request)]
+    (is (= "test" (:body response)))
+    (is (:exception response))))
