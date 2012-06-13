@@ -1,6 +1,6 @@
 (ns ring.middleware.json-params
-  (:import [org.codehaus.jackson JsonParseException])
-  (:require [clj-json.core :as json]
+  (:import [com.fasterxml.jackson.core JsonParseException])
+  (:require [cheshire.core :as json]
             [clj-stacktrace.repl :as stacktrace]))
 
 (defn- json-request?
